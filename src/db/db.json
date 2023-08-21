@@ -1,18 +1,6 @@
 {
   "Products": [
     {
-      "imageUrl": "123",
-      "name": "123",
-      "count": 123,
-      "size": {
-        "width": 123,
-        "height": 123
-      },
-      "weight": "123",
-      "comments": null,
-      "id": 2
-    },
-    {
       "imageUrl": "asd",
       "name": "a",
       "count": 222,
@@ -25,16 +13,28 @@
       "id": 3
     },
     {
-      "imageUrl": "prod",
-      "name": "prod",
-      "count": 2,
+      "imageUrl": "image.link",
+      "name": "new product",
+      "count": 25,
       "size": {
-        "width": 1337,
-        "height": 800
+        "width": 25,
+        "height": 30
       },
-      "weight": "30g",
+      "weight": "50g",
       "comments": null,
-      "id": 5
+      "id": 6
+    },
+    {
+      "imageUrl": "img",
+      "name": "product new",
+      "count": 50,
+      "size": {
+        "width": 30,
+        "height": 33
+      },
+      "weight": "60g",
+      "comments": null,
+      "id": 7
     }
   ],
   "Comments": [

@@ -1,27 +1,16 @@
-# React + TypeScript + Vite
+# Inforce Frontend Test Task
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[DEMO LINK](https://maksym-bobryk.github.io/Inforce-Frontend-Test-Task/)
 
-Currently, two official plugins are available:
+Welcome to the Inforce Test Task. You can see the list of products. This list is developed using React, SCSS, TypeScript, and Material UI.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Key Features:
+- Sorting products: you can sort products alphabetically or by count.
+- Removing products: the warning modal appears before removing, so you're in good arms and you won't remove product accidentally.
+- Adding products: there is a validation what data was entered and it's impossible to create a product with empty data.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# How to start the project
+- clone the [repository](https://github.com/maksym-bobryk/Inforce-Frontend-Test-Task) from github
+- run `npm i` for installing neccessary node modules
+- run `npm run launch-server` for running the json-server
+- run `npm run start` for running the product list
