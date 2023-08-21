@@ -1,0 +1,24 @@
+{
+  "Products": [
+    {
+      "imageUrl": "123",
+      "name": "123",
+      "count": 123,
+      "size": {
+        "width": 123,
+        "height": 123
+      },
+      "weight": "12",
+      "comments": null,
+      "id": 1
+    }
+  ],
+  "Comments": [
+    {
+      "id": 3,
+      "productId": 1,
+      "description": "some text here",
+      "date": "14:00 22.08.2021"
+    }
+  ]
+}
