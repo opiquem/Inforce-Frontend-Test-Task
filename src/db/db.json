@@ -11,6 +11,30 @@
       "weight": "123",
       "comments": null,
       "id": 2
+    },
+    {
+      "imageUrl": "asd",
+      "name": "a",
+      "count": 222,
+      "size": {
+        "width": 123,
+        "height": 1
+      },
+      "weight": "228g",
+      "comments": null,
+      "id": 3
+    },
+    {
+      "imageUrl": "prod",
+      "name": "prod",
+      "count": 2,
+      "size": {
+        "width": 1337,
+        "height": 800
+      },
+      "weight": "30g",
+      "comments": null,
+      "id": 5
     }
   ],
   "Comments": [
