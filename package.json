@@ -36,5 +36,13 @@
     "sass": "^1.66.1",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
-  }
+  },
+  "description": "[DEMO](https://fe-apr23-418-teapot-crew.github.io/online_store_front-end)",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maksym-bobryk/Inforce-Frontend-Test-Task.git"
+  },
+  "author": "",
+  "license": "ISC"
 }

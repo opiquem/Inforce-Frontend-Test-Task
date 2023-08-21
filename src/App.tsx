@@ -100,7 +100,7 @@ function App() {
       setAddProductError(false)
       clearFields();
     }
-  }, [products]);
+  }, []);
 
   const removeProduct = useCallback(async (productId: number) => {
     try {

@@ -8,45 +8,9 @@
         "width": 123,
         "height": 123
       },
-      "weight": "12",
-      "comments": null,
-      "id": 1
-    },
-    {
-      "imageUrl": "123",
-      "name": "123",
-      "count": 123,
-      "size": {
-        "width": 123,
-        "height": 123
-      },
       "weight": "123",
       "comments": null,
       "id": 2
-    },
-    {
-      "imageUrl": "123",
-      "name": "123",
-      "count": 123,
-      "size": {
-        "width": 123,
-        "height": 123
-      },
-      "weight": "123",
-      "comments": null,
-      "id": 3
-    },
-    {
-      "imageUrl": "11",
-      "name": "111",
-      "count": 11,
-      "size": {
-        "width": 11,
-        "height": 11
-      },
-      "weight": "11",
-      "comments": null,
-      "id": 4
     }
   ],
   "Comments": [

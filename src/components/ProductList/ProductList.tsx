@@ -14,6 +14,7 @@ import { Product } from '../../types/Product';
 import styles from './ProductList.module.scss';
 // import TextField from '@mui/material/TextField';
 import { CreateProductModal } from '../CreateProductModal/CreateProductModal';
+import { RemoveProductModal } from '../RemoveProductModal/RemoveProductModal';
 
 type Props = {
   products: Product[],
@@ -60,11 +61,23 @@ export const ProductList: React.FC<Props> = ({
   handleAddProductError,
   onRemoveProduct
 }) => {
+  const [isRemoveModalOpen, setRemoveModalOpen] = React.useState(false);
+  const [productToRemove, setProductToRemove] = React.useState<Product | null>(null);
+
+  const handleRemoveModalOpen = (product: Product) => {
+    setProductToRemove(product);
+    setRemoveModalOpen(true);
+  };
+
+  const handleRemoveModalClose = () => {
+    setRemoveModalOpen(false);
+    setProductToRemove(null);
+  };
 
   const handleSubmit = () => {
     const numberCheck = (value: string) => !isNaN(+value) && value !== '';
     const whiteSpaceCheck = (value: string) => typeof value === 'string' && value.trim().length === 0;
-  
+
     if (
       !numberCheck(productCount) ||
       !numberCheck(productWidth) ||
@@ -76,30 +89,30 @@ export const ProductList: React.FC<Props> = ({
       handleAddProductError(true);
       return;
     }
-  
+
     onAddProduct(productImage, productName, productCount, productWidth, productHeight, productWeight, null);
   };
 
   return (
     <div className={styles.productList}>
-      <CreateProductModal 
-         productImage={productImage}
-         productName={productName}
-         productCount={productCount}
-         productWidth={productWidth}
-         productHeight={productHeight}
-         productWeight={productWeight}
-         addProductError={addProductError}
-         handleModalToggle={handleModalToggle}
-         handleClose={handleClose}
-         isModalOpen={isModalOpen}
-         handleProductNameInput={handleProductNameInput}
-         handleProductImageInput={handleProductImageInput}
-         handleProductCountInput={handleProductCountInput}
-         handleProductWidthInput={handleProductWidthInput}
-         handleProductHeightInput={handleProductHeightInput}
-         handleProductWeightInput={handleProductWeightInput}
-         handleSubmit={handleSubmit}
+      <CreateProductModal
+        productImage={productImage}
+        productName={productName}
+        productCount={productCount}
+        productWidth={productWidth}
+        productHeight={productHeight}
+        productWeight={productWeight}
+        addProductError={addProductError}
+        handleModalToggle={handleModalToggle}
+        handleClose={handleClose}
+        isModalOpen={isModalOpen}
+        handleProductNameInput={handleProductNameInput}
+        handleProductImageInput={handleProductImageInput}
+        handleProductCountInput={handleProductCountInput}
+        handleProductWidthInput={handleProductWidthInput}
+        handleProductHeightInput={handleProductHeightInput}
+        handleProductWeightInput={handleProductWeightInput}
+        handleSubmit={handleSubmit}
       />
 
       <TableContainer component={Paper} sx={{ marginBottom: '20px' }}>
@@ -126,9 +139,7 @@ export const ProductList: React.FC<Props> = ({
                 <TableCell align="right">{`Height: ${product.size.height} Width: ${product.size.width}`}</TableCell>
                 <TableCell align="right">{product.weight}</TableCell>
                 <TableCell align="right">
-                  <Button onClick={() => onRemoveProduct(product.id)}>
-                    Delete
-                  </Button>
+                  <Button onClick={() => handleRemoveModalOpen(product)}>Delete</Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -136,11 +147,31 @@ export const ProductList: React.FC<Props> = ({
         </Table>
       </TableContainer>
 
-      <Button sx={{ backgroundColor: '#fff', color: 'black' }}
+      <Button
+        sx={{
+          backgroundColor: '#eee',
+          color: '#000',
+          '&:hover': {
+            color: '#fff',
+            backgroundColor: '#555',
+          },
+        }}
         onClick={handleModalToggle}
       >
         Add a product
       </Button>
+
+      <RemoveProductModal
+        isOpen={isRemoveModalOpen}
+        productName={productToRemove?.name || ''}
+        handleClose={handleRemoveModalClose}
+        handleConfirm={() => {
+          if (productToRemove) {
+            onRemoveProduct(productToRemove.id);
+          }
+          handleRemoveModalClose();
+        }}
+      />
     </div>
   );
 }
