@@ -15,6 +15,8 @@ import styles from './ProductList.module.scss';
 // import TextField from '@mui/material/TextField';
 import { CreateProductModal } from '../CreateProductModal/CreateProductModal';
 import { RemoveProductModal } from '../RemoveProductModal/RemoveProductModal';
+import { MenuItem, Typography } from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 type Props = {
   products: Product[],
@@ -37,6 +39,8 @@ type Props = {
   onAddProduct: (productImage: string, productName: string, productCount: string, productWidth: string, productHeight: string, productWeight: string, comments: null) => void,
   handleAddProductError: (bool: boolean) => void,
   onRemoveProduct: (productId: number) => void,
+  sortBy: string,
+  changeSortBy: (sortVal: string) => void,
 }
 
 export const ProductList: React.FC<Props> = ({
@@ -59,7 +63,9 @@ export const ProductList: React.FC<Props> = ({
   handleProductWeightInput,
   onAddProduct,
   handleAddProductError,
-  onRemoveProduct
+  onRemoveProduct,
+  changeSortBy,
+  sortBy
 }) => {
   const [isRemoveModalOpen, setRemoveModalOpen] = React.useState(false);
   const [productToRemove, setProductToRemove] = React.useState<Product | null>(null);
@@ -93,8 +99,54 @@ export const ProductList: React.FC<Props> = ({
     onAddProduct(productImage, productName, productCount, productWidth, productHeight, productWeight, null);
   };
 
+  function handleSortByChange(event: SelectChangeEvent) {
+    changeSortBy(event.target.value);
+  }
+
+  function getSortedProducts(
+    products: Product[],
+    sortBy: string,
+  ) {
+    const visibleProducts = [...products];
+
+    visibleProducts.sort((prodA, prodB) => {
+      switch (sortBy) {
+        case 'Alphabetically':
+          return prodA.name.localeCompare(prodB.name);
+
+        case 'DESC':
+          return prodB.count - prodA.count;
+
+        case 'ASC':
+          return prodA.count - prodB.count;
+
+        default:
+          return 0;
+      }
+    });
+
+    return visibleProducts;
+  }
+  const sortedProducts = getSortedProducts(products, sortBy);
+
   return (
     <div className={styles.productList}>
+      <Typography sx={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }} id="modal-modal-title" variant="h3" component="h2">
+        Products List
+      </Typography>
+      <div className={styles.productList__sort}>
+        <Select
+          labelId="demo-simple-select-label"
+          value={sortBy}
+          onChange={handleSortByChange}
+          sx={{ backgroundColor: '#fff' }}
+        >
+          <MenuItem value={'Alphabetically'}>Alphabetically</MenuItem>
+          <MenuItem value={'DESC'}>DESC</MenuItem>
+          <MenuItem value={'ASC'}>ASC</MenuItem>
+        </Select>
+      </div>
+
       <CreateProductModal
         productImage={productImage}
         productName={productName}
@@ -127,7 +179,7 @@ export const ProductList: React.FC<Props> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {products.map((product) => (
+            {sortedProducts.map((product) => (
               <TableRow
                 key={product.id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -147,19 +199,21 @@ export const ProductList: React.FC<Props> = ({
         </Table>
       </TableContainer>
 
-      <Button
-        sx={{
-          backgroundColor: '#eee',
-          color: '#000',
-          '&:hover': {
-            color: '#fff',
-            backgroundColor: '#555',
-          },
-        }}
-        onClick={handleModalToggle}
-      >
-        Add a product
-      </Button>
+      <div className={styles.productList__buttons}>
+        <Button
+          sx={{
+            backgroundColor: '#eee',
+            color: '#000',
+            '&:hover': {
+              color: '#fff',
+              backgroundColor: '#555',
+            },
+          }}
+          onClick={handleModalToggle}
+        >
+          Add a product
+        </Button>
+      </div>
 
       <RemoveProductModal
         isOpen={isRemoveModalOpen}

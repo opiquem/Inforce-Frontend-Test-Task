@@ -15,6 +15,11 @@ function App() {
   const [productWeight, setProductWeight] = useState('');
   const [addProductError, setAddProductError] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortBy, setSortBy] = useState('Alphabetically');
+
+  const changeSortBy = (sortValue: string) => {
+    setSortBy(sortValue);
+  };
 
   const handleAddProductError = (bool: boolean) => {
     setAddProductError(bool);
@@ -134,6 +139,8 @@ function App() {
       onAddProduct={addProduct}
       handleAddProductError={handleAddProductError}
       onRemoveProduct={removeProduct}
+      sortBy={sortBy}
+      changeSortBy={changeSortBy}
     />
   )
 }
