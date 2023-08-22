@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import styles from './CreateProductModal.module.scss';
+import { Product } from '../../types/Product';
 
 const style = {
   position: 'absolute',
@@ -20,43 +21,30 @@ const style = {
 };
 
 type Props = {
-  productImage: string,
-  productName: string,
-  productCount: string,
-  productWidth: string,
-  productHeight: string,
-  productWeight: string,
+  product: Omit<Product, 'id'>,
+  // productImage: string,
+  // productName: string,
+  // productCount: string,
+  // productWidth: string,
+  // productHeight: string,
+  // productWeight: string,
   addProductError: boolean,
   handleModalToggle: () => void,
   handleClose: () => void,
   isModalOpen: boolean,
-  handleProductNameInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  handleProductImageInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  handleProductCountInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  handleProductWidthInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  handleProductHeightInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  handleProductWeightInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  handleFieldChange: (fieldName: string,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
   handleSubmit: () => void,
 }
 
 export const CreateProductModal: React.FC<Props> = ({
-  productImage,
-  productName,
-  productCount,
-  productWidth,
-  productHeight,
-  productWeight,
+  product,
   addProductError,
   handleModalToggle,
   handleClose,
   isModalOpen,
-  handleProductNameInput,
-  handleProductImageInput,
-  handleProductCountInput,
-  handleProductWidthInput,
-  handleProductHeightInput,
-  handleProductWeightInput,
-  handleSubmit
+  handleFieldChange,
+  handleSubmit,
 }) => {
   return (
     <Modal
@@ -74,26 +62,25 @@ export const CreateProductModal: React.FC<Props> = ({
             id="outlined-password-input"
             label="Name"
             type="text"
-            value={productName}
-            onChange={handleProductNameInput}
+            value={product.name}
+            onChange={(event) => handleFieldChange('name', event)}
             sx={{ width: 170 }}
-
           />
           <TextField
             id="outlined-password-input"
             label="Image Url"
             type="text"
             sx={{ width: 170 }}
-            value={productImage}
-            onChange={handleProductImageInput}
+            value={product.imageUrl}
+            onChange={(event) => handleFieldChange('imageUrl', event)}
           />
           <TextField
             id="outlined-password-input"
             label="Count"
             type="text"
             sx={{ width: 170 }}
-            value={productCount}
-            onChange={handleProductCountInput}
+            value={product.count}
+            onChange={(event) => handleFieldChange('count', event)}
           />
 
           <TextField
@@ -101,8 +88,8 @@ export const CreateProductModal: React.FC<Props> = ({
             label="Width"
             type="text"
             sx={{ width: 170 }}
-            value={productWidth}
-            onChange={handleProductWidthInput}
+            value={product.size.width}
+            onChange={(event) => handleFieldChange('size.width', event)}
           />
 
           <TextField
@@ -110,8 +97,8 @@ export const CreateProductModal: React.FC<Props> = ({
             label="Height"
             type="text"
             sx={{ width: 170 }}
-            value={productHeight}
-            onChange={handleProductHeightInput}
+            value={product.size.height}
+            onChange={(event) => handleFieldChange('size.height', event)}
           />
 
           <TextField
@@ -120,8 +107,8 @@ export const CreateProductModal: React.FC<Props> = ({
             type="text"
             placeholder='Weight'
             sx={{ width: 170 }}
-            value={productWeight}
-            onChange={handleProductWeightInput}
+            value={product.weight}
+            onChange={(event) => handleFieldChange('weight', event)}
           />
           <Button
             sx={{

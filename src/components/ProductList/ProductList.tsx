@@ -6,13 +6,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-// import Box from '@mui/material/Box';
-// import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
 import { Product } from '../../types/Product';
 import styles from './ProductList.module.scss';
-// import TextField from '@mui/material/TextField';
 import { CreateProductModal } from '../CreateProductModal/CreateProductModal';
 import { RemoveProductModal } from '../RemoveProductModal/RemoveProductModal';
 import { MenuItem, Typography } from '@mui/material';
@@ -20,23 +16,14 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 type Props = {
   products: Product[],
-  productImage: string,
-  productName: string,
-  productCount: string,
-  productWidth: string,
-  productHeight: string,
-  productWeight: string,
+  product: Omit<Product, 'id'>,
   addProductError: boolean,
   handleModalToggle: () => void,
   handleClose: () => void,
   isModalOpen: boolean,
-  handleProductNameInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  handleProductImageInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  handleProductCountInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  handleProductWidthInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  handleProductHeightInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  handleProductWeightInput: (event: React.ChangeEvent<HTMLInputElement>) => void,
-  onAddProduct: (productImage: string, productName: string, productCount: string, productWidth: string, productHeight: string, productWeight: string, comments: null) => void,
+  handleFieldChange: (fieldName: string,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
+  onAddProduct: (productImage: string, productName: string, productCount: number, productWidth: number, productHeight: number, productWeight: string, comments: null) => void,
   handleAddProductError: (bool: boolean) => void,
   onRemoveProduct: (productId: number) => void,
   sortBy: string,
@@ -45,22 +32,12 @@ type Props = {
 
 export const ProductList: React.FC<Props> = ({
   products,
-  productImage,
-  productName,
-  productCount,
-  productWidth,
-  productHeight,
-  productWeight,
+  product,
+  handleFieldChange,
   addProductError,
   handleModalToggle,
   handleClose,
   isModalOpen,
-  handleProductNameInput,
-  handleProductImageInput,
-  handleProductCountInput,
-  handleProductWidthInput,
-  handleProductHeightInput,
-  handleProductWeightInput,
   onAddProduct,
   handleAddProductError,
   onRemoveProduct,
@@ -85,18 +62,18 @@ export const ProductList: React.FC<Props> = ({
     const whiteSpaceCheck = (value: string) => typeof value === 'string' && value.trim().length === 0;
 
     if (
-      !numberCheck(productCount) ||
-      !numberCheck(productWidth) ||
-      !numberCheck(productHeight) ||
-      whiteSpaceCheck(productImage) ||
-      whiteSpaceCheck(productName) ||
-      whiteSpaceCheck(productWeight)
+      !numberCheck(product.count.toString()) ||
+      !numberCheck(product.size.width.toString()) ||
+      !numberCheck(product.size.height.toString()) ||
+      whiteSpaceCheck(product.imageUrl) ||
+      whiteSpaceCheck(product.name) ||
+      whiteSpaceCheck(product.weight)
     ) {
       handleAddProductError(true);
       return;
     }
 
-    onAddProduct(productImage, productName, productCount, productWidth, productHeight, productWeight, null);
+    onAddProduct(product.imageUrl, product.name, product.count, product.size.width, product.size.height, product.weight, null);
   };
 
   function handleSortByChange(event: SelectChangeEvent) {
@@ -148,22 +125,12 @@ export const ProductList: React.FC<Props> = ({
       </div>
 
       <CreateProductModal
-        productImage={productImage}
-        productName={productName}
-        productCount={productCount}
-        productWidth={productWidth}
-        productHeight={productHeight}
-        productWeight={productWeight}
+        product={product}
         addProductError={addProductError}
         handleModalToggle={handleModalToggle}
         handleClose={handleClose}
         isModalOpen={isModalOpen}
-        handleProductNameInput={handleProductNameInput}
-        handleProductImageInput={handleProductImageInput}
-        handleProductCountInput={handleProductCountInput}
-        handleProductWidthInput={handleProductWidthInput}
-        handleProductHeightInput={handleProductHeightInput}
-        handleProductWeightInput={handleProductWeightInput}
+        handleFieldChange={handleFieldChange}
         handleSubmit={handleSubmit}
       />
 
