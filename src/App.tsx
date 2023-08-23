@@ -16,7 +16,7 @@ function App() {
     },
     weight: '',
     comments: null,
-  })
+  });
 
   const handleFieldChange = (
     fieldName: string,
@@ -29,44 +29,32 @@ function App() {
           ...prevProduct.size,
           width: numberValue,
         };
-  
+
         return {
           ...prevProduct,
           size: newSize,
         };
       }
-      
+
       if (fieldName === 'size.height') {
         const numberValue = event.target.value === '' ? 0 : parseInt(event.target.value, 10);
         const newSize = {
           ...prevProduct.size,
           height: numberValue,
         };
-  
+
         return {
           ...prevProduct,
           size: newSize,
         };
       }
-  
+
       return {
         ...prevProduct,
         [fieldName]: event.target.value,
       };
     });
-  };  
-
-  const [addProductError, setAddProductError] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [sortBy, setSortBy] = useState('Alphabetically');
-
-  const changeSortBy = (sortValue: string) => {
-    setSortBy(sortValue);
   };
-
-  const handleAddProductError = (bool: boolean) => {
-    setAddProductError(bool);
-  }
 
   const clearFields = () => {
     setProduct(() => ({
@@ -81,18 +69,6 @@ function App() {
       comments: null,
     }));
   }
-
-  const handleModalToggle = () => {
-    setIsModalOpen(!isModalOpen);
-    setAddProductError(false);
-    clearFields();
-  };
-
-  const handleClose = () => {
-    setIsModalOpen(false);
-    setAddProductError(false);
-    clearFields();
-  };
 
   useEffect(() => {
     getProducts()
@@ -130,7 +106,6 @@ function App() {
     } catch {
       throw new Error('Unable to add a product');
     } finally {
-      setAddProductError(false)
       clearFields();
     }
   }, []);
@@ -149,16 +124,10 @@ function App() {
     <ProductList
       products={products}
       product={product}
-      addProductError={addProductError}
-      handleModalToggle={handleModalToggle}
-      handleClose={handleClose}
-      isModalOpen={isModalOpen}
       handleFieldChange={handleFieldChange}
       onAddProduct={addProduct}
-      handleAddProductError={handleAddProductError}
       onRemoveProduct={removeProduct}
-      sortBy={sortBy}
-      changeSortBy={changeSortBy}
+      clearFields={clearFields}
     />
   )
 }
