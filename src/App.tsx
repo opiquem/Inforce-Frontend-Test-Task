@@ -6,64 +6,69 @@ import { createProduct, deleteProduct, getProducts } from './api/products';
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [product, setProduct] = useState<Omit<Product, 'id'>>({
+    imageUrl: '',
+    name: '',
+    count: 0,
+    size: {
+      width: 0,
+      height: 0,
+    },
+    weight: '',
+    comments: null,
+  });
 
-  const [productName, setProductName] = useState('');
-  const [productImage, setProductImage] = useState('');
-  const [productCount, setProductCount] = useState('');
-  const [productWidth, setProductWidth] = useState('');
-  const [productHeight, setProductHeight] = useState('');
-  const [productWeight, setProductWeight] = useState('');
-  const [addProductError, setAddProductError] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [sortBy, setSortBy] = useState('Alphabetically');
+  const handleFieldChange = (
+    fieldName: string,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setProduct((prevProduct) => {
+      if (fieldName === 'size.width') {
+        const numberValue = event.target.value === '' ? 0 : parseInt(event.target.value, 10);
+        const newSize = {
+          ...prevProduct.size,
+          width: numberValue,
+        };
 
-  const changeSortBy = (sortValue: string) => {
-    setSortBy(sortValue);
+        return {
+          ...prevProduct,
+          size: newSize,
+        };
+      }
+
+      if (fieldName === 'size.height') {
+        const numberValue = event.target.value === '' ? 0 : parseInt(event.target.value, 10);
+        const newSize = {
+          ...prevProduct.size,
+          height: numberValue,
+        };
+
+        return {
+          ...prevProduct,
+          size: newSize,
+        };
+      }
+
+      return {
+        ...prevProduct,
+        [fieldName]: event.target.value,
+      };
+    });
   };
 
-  const handleAddProductError = (bool: boolean) => {
-    setAddProductError(bool);
-  }
-  
-  const handleProductNameInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProductName(event.target.value);
-  }
-  const handleProductImageInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProductImage(event.target.value);
-  }
-  const handleProductCountInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProductCount(event.target.value);
-  }
-  const handleProductWidthInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProductWidth(event.target.value);
-  }
-  const handleProductHeightInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProductHeight(event.target.value);
-  }
-  const handleProductWeightInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProductWeight(event.target.value);
-  }
-  
   const clearFields = () => {
-    setProductName('');
-    setProductImage('');
-    setProductCount('');
-    setProductWidth('');
-    setProductHeight('');
-    setProductWeight('');
+    setProduct(() => ({
+      imageUrl: '',
+      name: '',
+      count: 0,
+      size: {
+        width: 0,
+        height: 0,
+      },
+      weight: '',
+      comments: null,
+    }));
   }
-
-  const handleModalToggle = () => {
-    setIsModalOpen(!isModalOpen);
-    setAddProductError(false);
-    clearFields();
-  };
-
-  const handleClose = () => {
-    setIsModalOpen(false);
-    setAddProductError(false);
-    clearFields();
-  };
 
   useEffect(() => {
     getProducts()
@@ -78,9 +83,9 @@ function App() {
   const addProduct = useCallback(async (
     productImage: string,
     productName: string,
-    productCount: string,
-    productWidth: string,
-    productHeight: string,
+    productCount: number,
+    productWidth: number,
+    productHeight: number,
     productWeight: string,
   ) => {
     const newProduct = {
@@ -97,12 +102,10 @@ function App() {
 
     try {
       const createdProduct = await createProduct(newProduct);
-
       setProducts((currentProducts) => [...currentProducts, createdProduct]);
     } catch {
       throw new Error('Unable to add a product');
     } finally {
-      setAddProductError(false)
       clearFields();
     }
   }, []);
@@ -120,27 +123,11 @@ function App() {
   return (
     <ProductList
       products={products}
-      productImage={productImage}
-      productName={productName}
-      productCount={productCount}
-      productWidth={productWidth}
-      productHeight={productHeight}
-      productWeight={productWeight}
-      addProductError={addProductError}
-      handleModalToggle={handleModalToggle}
-      handleClose={handleClose}
-      isModalOpen={isModalOpen}
-      handleProductNameInput={handleProductNameInput}
-      handleProductImageInput={handleProductImageInput}
-      handleProductCountInput={handleProductCountInput}
-      handleProductWidthInput={handleProductWidthInput}
-      handleProductHeightInput={handleProductHeightInput}
-      handleProductWeightInput={handleProductWeightInput}
+      product={product}
+      handleFieldChange={handleFieldChange}
       onAddProduct={addProduct}
-      handleAddProductError={handleAddProductError}
       onRemoveProduct={removeProduct}
-      sortBy={sortBy}
-      changeSortBy={changeSortBy}
+      clearFields={clearFields}
     />
   )
 }
