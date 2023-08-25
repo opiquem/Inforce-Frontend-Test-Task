@@ -2,11 +2,9 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
-import styles from './CreateProductModal.module.scss';
 import { Product } from '../../types/Product';
-import { buttonCreateFormStyles, errorStyles, tableStyle } from '../styles/styles';
-import { AddInputs } from '../AddInputs/AddInputs';
+import {  errorStyles, tableStyle } from '../styles/styles';
+import { AddForm } from '../AddForm/AddForm';
 
 type Props = {
   product: Omit<Product, 'id'>,
@@ -17,16 +15,15 @@ type Props = {
   handleFieldChange: (fieldName: string,
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
   handleSubmit: () => void,
+  onAddProduct: (productImage: string, productName: string, productCount: number, productWidth: number, productHeight: number, productWeight: string, comments: null) => void
 }
 
 export const CreateProductModal: React.FC<Props> = ({
-  product,
   addProductError,
   handleModalToggle,
   handleClose,
   isModalOpen,
-  handleFieldChange,
-  handleSubmit,
+  onAddProduct,
 }) => {
   return (
     <Modal
@@ -39,27 +36,12 @@ export const CreateProductModal: React.FC<Props> = ({
         <Typography sx={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }} id="modal-modal-title" variant="h6" component="h2">
           Add a product
         </Typography>
-        <div className={styles.createProductModal__inputs}>
 
-          <AddInputs
-            product={product}
-            handleFieldChange={handleFieldChange}
-          />
+        <AddForm
+          onAddProduct={onAddProduct}
+          handleModalToggle={handleModalToggle}
+        />
 
-          <Button
-            sx={buttonCreateFormStyles}
-            onClick={handleSubmit}
-          >
-            Add
-          </Button>
-
-          <Button sx={buttonCreateFormStyles}
-            onClick={handleModalToggle}
-          >
-            Cancel
-          </Button>
-        </div>
-        
         {addProductError &&
           <Typography sx={errorStyles} variant="h6" component="h2">
             Error, check your inputs!
