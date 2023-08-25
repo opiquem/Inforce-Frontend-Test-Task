@@ -134,6 +134,7 @@ export const AddForm: React.FC<Props> = ({ onAddProduct, handleModalToggle }) =>
         helperText={formik.touched.weight && formik.errors.weight}
         sx={{ width: 170 }}
       />
+
       <Button
         sx={buttonCreateFormStyles}
         type="submit"
