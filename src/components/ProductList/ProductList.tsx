@@ -112,6 +112,7 @@ export const ProductList: React.FC<Props> = ({
         isModalOpen={isModalOpen}
         handleFieldChange={handleFieldChange}
         handleSubmit={handleSubmit}
+        onAddProduct={onAddProduct}
       />
 
       <ProductTable 
