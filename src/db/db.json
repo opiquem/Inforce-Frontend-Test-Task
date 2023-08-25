@@ -13,18 +13,6 @@
       "id": 7
     },
     {
-      "imageUrl": "asdads",
-      "name": "asdad",
-      "count": 1,
-      "size": {
-        "width": 1,
-        "height": 1
-      },
-      "weight": "asdads",
-      "comments": null,
-      "id": 9
-    },
-    {
       "imageUrl": "asdasd",
       "name": "asdasd",
       "count": 1,
@@ -59,6 +47,18 @@
       "weight": "123",
       "comments": null,
       "id": 13
+    },
+    {
+      "imageUrl": "image",
+      "name": "name",
+      "count": 12,
+      "size": {
+        "width": 2,
+        "height": 3
+      },
+      "weight": "250g",
+      "comments": null,
+      "id": 14
     }
   ],
   "Comments": [
