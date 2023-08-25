@@ -37,18 +37,6 @@
       "id": 12
     },
     {
-      "imageUrl": "123",
-      "name": "123",
-      "count": 123,
-      "size": {
-        "width": 123,
-        "height": 123
-      },
-      "weight": "123",
-      "comments": null,
-      "id": 13
-    },
-    {
       "imageUrl": "image",
       "name": "name",
       "count": 12,
