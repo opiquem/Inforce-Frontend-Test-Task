@@ -38,9 +38,9 @@ export const AddForm: React.FC<Props> = ({ onAddProduct, handleModalToggle }) =>
     initialValues: {
       imageUrl: '',
       name: '',
-      count: null,
-      width: null,
-      height: null,
+      count: 0,
+      width: 0,
+      height: 0,
       weight: '',
     },
     validationSchema: addProductShema,
@@ -52,89 +52,21 @@ export const AddForm: React.FC<Props> = ({ onAddProduct, handleModalToggle }) =>
   )
   return (
     <form onSubmit={formik.handleSubmit} className={styles.addForm__inputs}>
-      <TextField
+      {Object.keys(formik.values).map((property: string) => (
+        <TextField
         fullWidth
-        id="imageUrl"
-        name="imageUrl"
-        label="ImageUrl"
-        value={formik.values.imageUrl}
+        id={property}
+        name={property}
+        label={property}
+        value={formik.values[property as keyof typeof formik.values]}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        error={formik.touched.imageUrl && Boolean(formik.errors.imageUrl)}
-        helperText={formik.touched.imageUrl && formik.errors.imageUrl}
+        error={formik.touched[property as keyof typeof formik.touched] && Boolean(formik.errors[property as keyof typeof formik.errors])}
+        helperText={formik.touched[property as keyof typeof formik.touched] && formik.errors[property as keyof typeof formik.errors]}
         sx={{ width: 170 }}
       />
-
-      <TextField
-        fullWidth
-        id="name"
-        name="name"
-        label="Name"
-        type="name"
-        value={formik.values.name}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.name && Boolean(formik.errors.name)}
-        helperText={formik.touched.name && formik.errors.name}
-        sx={{ width: 170 }}
-      />
-
-      <TextField
-        fullWidth
-        id="count"
-        name="count"
-        label="Count"
-        type="count"
-        value={formik.values.count}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.count && Boolean(formik.errors.count)}
-        helperText={formik.touched.count && formik.errors.count}
-        sx={{ width: 170 }}
-      />
-
-      <TextField
-        fullWidth
-        id="width"
-        name="width"
-        label="Width"
-        type="width"
-        value={formik.values.width}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.width && Boolean(formik.errors.width)}
-        helperText={formik.touched.width && formik.errors.width}
-        sx={{ width: 170 }}
-      />
-
-      <TextField
-        fullWidth
-        id="height"
-        name="height"
-        label="Height"
-        type="height"
-        value={formik.values.height}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.height && Boolean(formik.errors.height)}
-        helperText={formik.touched.height && formik.errors.height}
-        sx={{ width: 170 }}
-      />
-
-      <TextField
-        fullWidth
-        id="weight"
-        name="weight"
-        label="Weight"
-        type="weight"
-        value={formik.values.weight}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.weight && Boolean(formik.errors.weight)}
-        helperText={formik.touched.weight && formik.errors.weight}
-        sx={{ width: 170 }}
-      />
-
+      ))}
+      
       <Button
         sx={buttonCreateFormStyles}
         type="submit"
