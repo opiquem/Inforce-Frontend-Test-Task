@@ -66,7 +66,7 @@ export const AddForm: React.FC<Props> = ({ onAddProduct, handleModalToggle }) =>
         sx={{ width: 170 }}
       />
       ))}
-      
+
       <Button
         sx={buttonCreateFormStyles}
         type="submit"
