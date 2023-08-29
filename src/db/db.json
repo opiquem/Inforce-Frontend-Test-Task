@@ -1,28 +1,16 @@
 {
   "Products": [
     {
-      "imageUrl": "228",
-      "name": "228",
-      "count": 228,
+      "imageUrl": "123",
+      "name": "123",
+      "count": 0,
       "size": {
-        "width": 228,
-        "height": 228
+        "width": 0,
+        "height": 0
       },
-      "weight": "228",
+      "weight": "123",
       "comments": null,
-      "id": 12
-    },
-    {
-      "imageUrl": "product",
-      "name": "product",
-      "count": 1,
-      "size": {
-        "width": 1,
-        "height": 1
-      },
-      "weight": "product",
-      "comments": null,
-      "id": 15
+      "id": 18
     }
   ],
   "Comments": [

@@ -13,8 +13,6 @@ import { addButtonStyles, productListTitleStyles } from '../styles/styles';
 type Props = {
   products: Product[],
   product: Omit<Product, 'id'>,
-  handleFieldChange: (fieldName: string,
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
   onAddProduct: (productImage: string, productName: string, productCount: number, productWidth: number, productHeight: number, productWeight: string, comments: null) => void,
   onRemoveProduct: (productId: number) => void,
   clearFields: () => void,
@@ -23,7 +21,6 @@ type Props = {
 export const ProductList: React.FC<Props> = ({
   products,
   product,
-  handleFieldChange,
   onAddProduct,
   onRemoveProduct,
   clearFields
@@ -110,7 +107,6 @@ export const ProductList: React.FC<Props> = ({
         handleModalToggle={handleModalToggle}
         handleClose={handleClose}
         isModalOpen={isModalOpen}
-        handleFieldChange={handleFieldChange}
         handleSubmit={handleSubmit}
         onAddProduct={onAddProduct}
       />

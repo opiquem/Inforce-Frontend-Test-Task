@@ -12,8 +12,6 @@ type Props = {
   handleModalToggle: () => void,
   handleClose: () => void,
   isModalOpen: boolean,
-  handleFieldChange: (fieldName: string,
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
   handleSubmit: () => void,
   onAddProduct: (productImage: string, productName: string, productCount: number, productWidth: number, productHeight: number, productWeight: string, comments: null) => void
 }

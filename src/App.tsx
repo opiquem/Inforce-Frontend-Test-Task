@@ -2,10 +2,11 @@ import { useCallback, useEffect, useState } from 'react';
 import './App.css'
 import { ProductList } from './components/ProductList/ProductList'
 import { Product } from './types/Product'
-import { createProduct, deleteProduct, getProducts } from './api/products';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { addProduct, fetchProducts, removeProduct } from './features/products';
+
 
 function App() {
-  const [products, setProducts] = useState<Product[]>([]);
   const [product, setProduct] = useState<Omit<Product, 'id'>>({
     imageUrl: '',
     name: '',
@@ -18,43 +19,12 @@ function App() {
     comments: null,
   });
 
-  const handleFieldChange = (
-    fieldName: string,
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setProduct((prevProduct) => {
-      if (fieldName === 'size.width') {
-        const numberValue = event.target.value === '' ? 0 : parseInt(event.target.value, 10);
-        const newSize = {
-          ...prevProduct.size,
-          width: numberValue,
-        };
+  const dispatch = useAppDispatch();
+  const newProducts = useAppSelector((state) => state.products.products);
 
-        return {
-          ...prevProduct,
-          size: newSize,
-        };
-      }
-
-      if (fieldName === 'size.height') {
-        const numberValue = event.target.value === '' ? 0 : parseInt(event.target.value, 10);
-        const newSize = {
-          ...prevProduct.size,
-          height: numberValue,
-        };
-
-        return {
-          ...prevProduct,
-          size: newSize,
-        };
-      }
-
-      return {
-        ...prevProduct,
-        [fieldName]: event.target.value,
-      };
-    });
-  };
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   const clearFields = () => {
     setProduct(() => ({
@@ -70,17 +40,7 @@ function App() {
     }));
   }
 
-  useEffect(() => {
-    getProducts()
-      .then(productsFromServer => {
-        setProducts(productsFromServer);
-      })
-      .catch((errorFromServer) => {
-        throw new Error(errorFromServer);
-      });
-  }, []);
-
-  const addProduct = useCallback(async (
+  const createNewProduct = useCallback(async (
     productImage: string,
     productName: string,
     productCount: number,
@@ -101,32 +61,28 @@ function App() {
     }
 
     try {
-      const createdProduct = await createProduct(newProduct);
-      setProducts((currentProducts) => [...currentProducts, createdProduct]);
+      await dispatch(addProduct(newProduct));
     } catch {
       throw new Error('Unable to add a product');
     } finally {
-      clearFields();
+      // clearFields();
     }
-  }, []);
+  }, [dispatch]);
 
-  const removeProduct = useCallback(async (productId: number) => {
+  const removeChosenProduct = useCallback(async (productId: number) => {
     try {
-      await deleteProduct(productId);
-      setProducts((currentProducts) => currentProducts.filter(product => (
-        product.id !== productId)));
+      await dispatch(removeProduct(productId)); 
     } catch {
       throw new Error('Unable to delete a product');
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <ProductList
-      products={products}
+      products={newProducts}
       product={product}
-      handleFieldChange={handleFieldChange}
-      onAddProduct={addProduct}
-      onRemoveProduct={removeProduct}
+      onAddProduct={createNewProduct}
+      onRemoveProduct={removeChosenProduct}
       clearFields={clearFields}
     />
   )
